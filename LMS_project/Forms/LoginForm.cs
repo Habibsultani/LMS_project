@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace LMS_project.Forms
 {
-    public partial class Form2 : Form
+    public partial class LoginForm : Form
     {
-        public Form2()
+        public LoginForm()
         {
             InitializeComponent();
         }

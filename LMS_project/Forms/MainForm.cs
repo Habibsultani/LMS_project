@@ -9,7 +9,7 @@ namespace LMS_project
             try
             {                 // Test database connection
                 var connection = Database.DbConnection.GetConnection();
-                MessageBox.Show("Database connected successfully.");
+                MessageBox.Show("Database c%onnected successfully.");
                 connection.Close();
             }
             catch (Exception ex)

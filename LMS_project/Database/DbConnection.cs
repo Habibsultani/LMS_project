@@ -7,15 +7,13 @@ namespace LMS_project.Database
 {
     public static class DbConnection
     {
-        // Connection string (XAMPP default)
         private static readonly string connectionString =
             "Server=localhost;" +
             "Database=lms_project;" +
             "Uid=root;" +
             "Pwd=;" +
-            "SslMode=None;";
+            "SslMode=Disabled;";
 
-        // This method returns an OPEN MySQL connection
         public static MySqlConnection GetConnection()
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
