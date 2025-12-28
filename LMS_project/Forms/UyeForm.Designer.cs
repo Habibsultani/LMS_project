@@ -34,14 +34,15 @@
             label4 = new Label();
             label5 = new Label();
             txtOgrenciNo = new TextBox();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
+            txtAdSoyad = new TextBox();
+            txtEmail = new TextBox();
+            txtTelefon = new TextBox();
             btnEkle = new Button();
             btnGuncelle = new Button();
             btnSil = new Button();
             btnTemizle = new Button();
             dgvUyeler = new DataGridView();
+            btnBack = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUyeler).BeginInit();
             SuspendLayout();
             // 
@@ -55,7 +56,6 @@
             label1.Size = new Size(337, 41);
             label1.TabIndex = 0;
             label1.Text = "User management page";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -100,27 +100,26 @@
             txtOgrenciNo.Size = new Size(356, 47);
             txtOgrenciNo.TabIndex = 5;
             // 
-            // textBox1
+            // txtAdSoyad
             // 
-            textBox1.Location = new Point(538, 269);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(329, 47);
-            textBox1.TabIndex = 6;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtAdSoyad.Location = new Point(538, 269);
+            txtAdSoyad.Name = "txtAdSoyad";
+            txtAdSoyad.Size = new Size(329, 47);
+            txtAdSoyad.TabIndex = 6;
             // 
-            // textBox2
+            // txtEmail
             // 
-            textBox2.Location = new Point(940, 269);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(352, 47);
-            textBox2.TabIndex = 7;
+            txtEmail.Location = new Point(940, 269);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(352, 47);
+            txtEmail.TabIndex = 7;
             // 
-            // textBox3
+            // txtTelefon
             // 
-            textBox3.Location = new Point(1388, 269);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(434, 47);
-            textBox3.TabIndex = 8;
+            txtTelefon.Location = new Point(1388, 269);
+            txtTelefon.Name = "txtTelefon";
+            txtTelefon.Size = new Size(434, 47);
+            txtTelefon.TabIndex = 8;
             // 
             // btnEkle
             // 
@@ -176,20 +175,32 @@
             dgvUyeler.Size = new Size(1663, 476);
             dgvUyeler.TabIndex = 13;
             // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.SandyBrown;
+            btnBack.Location = new Point(122, 57);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(376, 58);
+            btnBack.TabIndex = 14;
+            btnBack.Text = "🔙Ana menya dun";
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
+            // 
             // UyeForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.aw528649_01_0_resized;
             ClientSize = new Size(2043, 1175);
+            Controls.Add(btnBack);
             Controls.Add(dgvUyeler);
             Controls.Add(btnTemizle);
             Controls.Add(btnSil);
             Controls.Add(btnGuncelle);
             Controls.Add(btnEkle);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(txtTelefon);
+            Controls.Add(txtEmail);
+            Controls.Add(txtAdSoyad);
             Controls.Add(txtOgrenciNo);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -212,13 +223,14 @@
         private Label label4;
         private Label label5;
         private TextBox txtOgrenciNo;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox txtAdSoyad;
+        private TextBox txtEmail;
+        private TextBox txtTelefon;
         private Button btnEkle;
         private Button btnGuncelle;
         private Button btnSil;
         private Button btnTemizle;
         private DataGridView dgvUyeler;
+        private Button btnBack;
     }
 }

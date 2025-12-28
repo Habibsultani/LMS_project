@@ -103,6 +103,16 @@ namespace LMS_project
             return adSoyad;
         }
 
+        private void btnUyeYonetimi_Click(object sender, EventArgs e)
+        {
+            // Open UyeForm
+            UyeForm uyeForm = new UyeForm();
+
+            // Open as modal dialog
+            uyeForm.ShowDialog(this);
+        }
+
+
 
 
     }

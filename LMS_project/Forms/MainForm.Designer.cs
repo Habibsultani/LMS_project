@@ -57,6 +57,7 @@
             btnUyeYonetimi.TabIndex = 1;
             btnUyeYonetimi.Text = "Uye yontemi";
             btnUyeYonetimi.UseVisualStyleBackColor = true;
+            btnUyeYonetimi.Click += btnUyeYonetimi_Click;
             // 
             // btnKitapYonetimi
             // 
