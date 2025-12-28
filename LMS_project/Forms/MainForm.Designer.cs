@@ -38,6 +38,7 @@
             btnDinamikSorgu = new Button();
             btnLogout = new Button();
             lblWelcome = new Label();
+            btnKullaniciYonetimi = new Button();
             SuspendLayout();
             // 
             // lblRoleInfo
@@ -125,12 +126,24 @@
             lblWelcome.TabIndex = 8;
             lblWelcome.Text = "Welcome again: ";
             // 
+            // btnKullaniciYonetimi
+            // 
+            btnKullaniciYonetimi.BackColor = Color.CornflowerBlue;
+            btnKullaniciYonetimi.Location = new Point(910, 96);
+            btnKullaniciYonetimi.Name = "btnKullaniciYonetimi";
+            btnKullaniciYonetimi.Size = new Size(310, 58);
+            btnKullaniciYonetimi.TabIndex = 9;
+            btnKullaniciYonetimi.Text = "Kullanici yontemi";
+            btnKullaniciYonetimi.UseVisualStyleBackColor = false;
+            btnKullaniciYonetimi.Click += btnKullaniciYonetimi_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1232, 648);
+            Controls.Add(btnKullaniciYonetimi);
             Controls.Add(lblWelcome);
             Controls.Add(btnLogout);
             Controls.Add(btnDinamikSorgu);
@@ -158,5 +171,6 @@
         private Button btnDinamikSorgu;
         private Button btnLogout;
         private Label lblWelcome;
+        private Button btnKullaniciYonetimi;
     }
 }

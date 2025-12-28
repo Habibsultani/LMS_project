@@ -51,6 +51,7 @@ namespace LMS_project
                 btnUyeYonetimi.Enabled = false;
                 btnRaporlar.Enabled = false;
                 btnDinamikSorgu.Enabled = false;
+                btnKullaniciYonetimi.Enabled = false;
             }
 
             // Admin (rol_id = 1) ? full access
@@ -65,10 +66,6 @@ namespace LMS_project
 
 
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("habibsss");
-        }
 
         private string GetKullaniciAdSoyad()
         {
@@ -112,6 +109,18 @@ namespace LMS_project
             uyeForm.ShowDialog(this);
         }
 
+
+        private void btnKullaniciYonetimi_Click(object sender, EventArgs e)
+        {
+            if (_rol_id != 1)
+            {
+                MessageBox.Show("Bu i?lem sadece Admin taraf?ndan yap?labilir.");
+                return;
+            }
+
+            KullaniciForm kullaniciForm = new KullaniciForm();
+            kullaniciForm.ShowDialog(this);
+        }
 
 
 
