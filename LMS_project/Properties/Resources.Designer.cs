@@ -59,5 +59,15 @@ namespace LMS_project.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap aw528649_01_0_resized {
+            get {
+                object obj = ResourceManager.GetObject("aw528649_01_0_resized", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
