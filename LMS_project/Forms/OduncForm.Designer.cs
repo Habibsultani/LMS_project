@@ -44,6 +44,7 @@
             txtTeslimOgrenciNo = new TextBox();
             lblOgrenciNoTeslim = new Label();
             dgvAktifOduncler = new DataGridView();
+            oduncVerAnaMeunya = new Button();
             grpOduncVer.SuspendLayout();
             grpTeslimAl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAktifOduncler).BeginInit();
@@ -228,12 +229,24 @@
             dgvAktifOduncler.CellClick += dgvAktifOduncler_CellClick;
             dgvAktifOduncler.Click += dgvAktifOduncler_Click;
             // 
+            // oduncVerAnaMeunya
+            // 
+            oduncVerAnaMeunya.BackColor = Color.DarkSalmon;
+            oduncVerAnaMeunya.Location = new Point(193, 12);
+            oduncVerAnaMeunya.Name = "oduncVerAnaMeunya";
+            oduncVerAnaMeunya.Size = new Size(320, 58);
+            oduncVerAnaMeunya.TabIndex = 3;
+            oduncVerAnaMeunya.Text = "Ana menuya dun";
+            oduncVerAnaMeunya.UseVisualStyleBackColor = false;
+            oduncVerAnaMeunya.Click += oduncVerAnaMeunya_click;
+            // 
             // OduncForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.aw528649_01_0_resized3;
-            ClientSize = new Size(2009, 1296);
+            ClientSize = new Size(2036, 1296);
+            Controls.Add(oduncVerAnaMeunya);
             Controls.Add(dgvAktifOduncler);
             Controls.Add(grpTeslimAl);
             Controls.Add(grpOduncVer);
@@ -266,5 +279,6 @@
         private Button btnTeslimOgrenciKontrol;
         private DataGridView dgvAktifOduncler;
         private Button btnTeslimAl;
+        private Button oduncVerAnaMeunya;
     }
 }

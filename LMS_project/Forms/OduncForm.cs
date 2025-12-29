@@ -325,5 +325,10 @@ namespace LMS_project.Forms
         {
 
         }
+
+        private void oduncVerAnaMeunya_click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
