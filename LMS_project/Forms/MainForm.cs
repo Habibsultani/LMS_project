@@ -1,4 +1,4 @@
-using LMS_project.Forms;
+﻿using LMS_project.Forms;
 using MySql.Data.MySqlClient;
 using MySql.Data.MySqlClient;
 using LMS_project.Database;
@@ -19,11 +19,11 @@ namespace LMS_project
             _rol_id = rol_id;
             String rol;
 
-            if (_rol_id == 1) // Admin rol�
+            if (_rol_id == 1) // Admin rolü
             {
                 rol  = "Admin";
             }
-            else // Normal kullan?c? rol�
+            else // Normal kullanıcı rolü
             {
                 rol = "Gorevli";
             }
@@ -33,7 +33,7 @@ namespace LMS_project
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string rolAdi = (_rol_id == 1) ? "Admin" : "G�revli";
+            string rolAdi = (_rol_id == 1) ? "Admin" : "Görevli";
             lblRoleInfo.Text = "Rol: " + rolAdi;
 
             string adSoyad = GetKullaniciAdSoyad();
@@ -45,7 +45,7 @@ namespace LMS_project
 
         private void ApplyAuthorization()
         {
-            // G�revli (rol_id = 2) k?s?tlamalar?
+            // Görevli (rol_id = 2) kısıtlamaları
             if (_rol_id == 2)
             {
                 btnUyeYonetimi.Enabled = false;
@@ -54,7 +54,7 @@ namespace LMS_project
                 btnKullaniciYonetimi.Enabled = false;
             }
 
-            // Admin (rol_id = 1) ? full access
+            // Admin (rol_id = 1) → full access
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace LMS_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kullan?c? bilgisi al?namad?: " + ex.Message);
+                MessageBox.Show("Kullanıcı bilgisi alınamadı: " + ex.Message);
             }
 
             return adSoyad;
@@ -114,13 +114,20 @@ namespace LMS_project
         {
             if (_rol_id != 1)
             {
-                MessageBox.Show("Bu i?lem sadece Admin taraf?ndan yap?labilir.");
+                MessageBox.Show("Bu işlem sadece Admin tarafından yapılabilir.");
                 return;
             }
 
             KullaniciForm kullaniciForm = new KullaniciForm();
             kullaniciForm.ShowDialog(this);
         }
+
+        private void btnKitapYonetimi_Click(object sender, EventArgs e)
+        {
+            KitapForm kitapForm = new KitapForm();
+            kitapForm.ShowDialog(this);
+        }
+
 
 
 

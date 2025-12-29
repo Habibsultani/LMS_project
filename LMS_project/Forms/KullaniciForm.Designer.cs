@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KullaniciForm));
             label1 = new Label();
             label2 = new Label();
             txtUsername = new TextBox();
@@ -137,7 +138,7 @@
             btnTemizle.TabIndex = 10;
             btnTemizle.Text = "Temizle";
             btnTemizle.UseVisualStyleBackColor = false;
-            btnTemizle.Click += this.btnTemizle_Click;
+            btnTemizle.Click += btnTemizle_Click;
             // 
             // btnBack
             // 
@@ -154,7 +155,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.aw528649_01_0_resized1;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1193, 789);
             Controls.Add(btnBack);
             Controls.Add(btnTemizle);

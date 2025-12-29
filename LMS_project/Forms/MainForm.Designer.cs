@@ -68,6 +68,7 @@
             btnKitapYonetimi.TabIndex = 2;
             btnKitapYonetimi.Text = "kitap yontemi";
             btnKitapYonetimi.UseVisualStyleBackColor = true;
+            btnKitapYonetimi.Click += btnKitapYonetimi_Click;
             // 
             // btnOduncIslemleri
             // 

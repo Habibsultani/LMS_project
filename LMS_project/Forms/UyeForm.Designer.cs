@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UyeForm));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -50,7 +51,7 @@
             // 
             label1.AutoSize = true;
             label1.FlatStyle = FlatStyle.Flat;
-            label1.Location = new Point(902, 66);
+            label1.Location = new Point(820, 58);
             label1.Margin = new Padding(10);
             label1.Name = "label1";
             label1.Size = new Size(337, 41);
@@ -166,19 +167,19 @@
             dgvUyeler.AllowUserToAddRows = false;
             dgvUyeler.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUyeler.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUyeler.Location = new Point(143, 522);
+            dgvUyeler.Location = new Point(122, 522);
             dgvUyeler.MultiSelect = false;
             dgvUyeler.Name = "dgvUyeler";
             dgvUyeler.ReadOnly = true;
             dgvUyeler.RowHeadersWidth = 102;
             dgvUyeler.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvUyeler.Size = new Size(1663, 476);
+            dgvUyeler.Size = new Size(1700, 476);
             dgvUyeler.TabIndex = 13;
             // 
             // btnBack
             // 
             btnBack.BackColor = Color.SandyBrown;
-            btnBack.Location = new Point(122, 57);
+            btnBack.Location = new Point(834, 1032);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(376, 58);
             btnBack.TabIndex = 14;
@@ -190,7 +191,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.aw528649_01_0_resized;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(2043, 1175);
             Controls.Add(btnBack);
             Controls.Add(dgvUyeler);

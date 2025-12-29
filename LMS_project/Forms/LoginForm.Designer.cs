@@ -23,27 +23,28 @@
             label1 = new Label();
             label2 = new Label();
             btnLogin = new Button();
+            label3 = new Label();
             SuspendLayout();
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(197, 129);
+            txtUsername.Location = new Point(213, 199);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(250, 47);
+            txtUsername.Size = new Size(366, 47);
             txtUsername.TabIndex = 3;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(197, 261);
+            txtPassword.Location = new Point(213, 337);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(250, 47);
+            txtPassword.Size = new Size(366, 47);
             txtPassword.TabIndex = 1;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(197, 85);
+            label1.Location = new Point(213, 155);
             label1.Name = "label1";
             label1.Size = new Size(178, 41);
             label1.TabIndex = 4;
@@ -52,7 +53,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(197, 217);
+            label2.Location = new Point(213, 293);
             label2.Name = "label2";
             label2.Size = new Size(76, 41);
             label2.TabIndex = 2;
@@ -60,12 +61,23 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(197, 348);
+            btnLogin.BackColor = Color.LimeGreen;
+            btnLogin.Location = new Point(213, 415);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(188, 40);
+            btnLogin.Size = new Size(366, 55);
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Giriş";
+            btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(150, 35);
+            label3.Name = "label3";
+            label3.Size = new Size(548, 41);
+            label3.TabIndex = 5;
+            label3.Text = "Kutuphane yonetem sistemi hosgeldiniz";
             // 
             // LoginForm
             // 
@@ -73,6 +85,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(807, 553);
+            Controls.Add(label3);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
             Controls.Add(label2);
@@ -91,5 +104,6 @@
         private Label label1;
         private Label label2;
         private Button btnLogin;
+        private Label label3;
     }
 }
