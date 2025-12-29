@@ -129,6 +129,12 @@ namespace LMS_project
         }
 
 
+        private void btnOduncIslemleri_click(object sender, EventArgs e)
+        {
+            OduncForm oduncForm = new OduncForm(_kullaniciId);
+            oduncForm.ShowDialog();
+        }
+
 
 
     }

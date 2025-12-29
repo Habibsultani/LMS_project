@@ -78,6 +78,7 @@
             btnOduncIslemleri.TabIndex = 3;
             btnOduncIslemleri.Text = "Odunc Islemeleri";
             btnOduncIslemleri.UseVisualStyleBackColor = true;
+            btnOduncIslemleri.Click += btnOduncIslemleri_click;
             // 
             // btnCeza
             // 
