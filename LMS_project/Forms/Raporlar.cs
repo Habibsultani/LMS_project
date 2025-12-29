@@ -26,5 +26,11 @@ namespace LMS_project.Forms
             RaporGecikenKitaplarForm raporGecikenKitaplarForm = new RaporGecikenKitaplarForm();
             raporGecikenKitaplarForm.ShowDialog();
         }
+
+        private void btnEnCokUdunc_click(object sender, EventArgs e)
+        {
+            RaporEnCokOduncForm raporEnCokOduncForm = new RaporEnCokOduncForm();
+            raporEnCokOduncForm.ShowDialog();
+        }
     }
 }

@@ -30,6 +30,7 @@
         {
             btnTarihAraligi = new Button();
             btnGecekenKitablar = new Button();
+            btnEnCokUdunc = new Button();
             SuspendLayout();
             // 
             // btnTarihAraligi
@@ -52,12 +53,23 @@
             btnGecekenKitablar.UseVisualStyleBackColor = true;
             btnGecekenKitablar.Click += btnGecekenKitablar_click;
             // 
+            // btnEnCokUdunc
+            // 
+            btnEnCokUdunc.Location = new Point(223, 410);
+            btnEnCokUdunc.Name = "btnEnCokUdunc";
+            btnEnCokUdunc.Size = new Size(691, 58);
+            btnEnCokUdunc.TabIndex = 2;
+            btnEnCokUdunc.Text = "En Çok Ödünç Alınan Kitaplar Raporu";
+            btnEnCokUdunc.UseVisualStyleBackColor = true;
+            btnEnCokUdunc.Click += btnEnCokUdunc_click;
+            // 
             // Raporlar
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.aw528649_01_0_resized6;
             ClientSize = new Size(1586, 950);
+            Controls.Add(btnEnCokUdunc);
             Controls.Add(btnGecekenKitablar);
             Controls.Add(btnTarihAraligi);
             Name = "Raporlar";
@@ -69,5 +81,6 @@
 
         private Button btnTarihAraligi;
         private Button btnGecekenKitablar;
+        private Button btnEnCokUdunc;
     }
 }
