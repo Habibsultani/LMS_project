@@ -197,5 +197,133 @@ namespace LMS_project.Forms
 
             txtOgrenciNo.Focus();
         }
+
+        //// telim al islemei burade yapilacak
+        ///
+
+        private void btnTeslimOgrenciKontrol_Click(object sender, EventArgs e)
+        {
+            if (txtTeslimOgrenciNo.Text.Trim() == "")
+            {
+                MessageBox.Show("Öğrenci numarası giriniz.");
+                return;
+            }
+
+            try
+            {
+                using (MySqlConnection conn = DbConnection.GetConnection())
+                {
+                    // 1️⃣ öğrenci kontrol
+                    string ogrQuery = @"
+                SELECT ogrenci_id
+                FROM ogrenci_uyeler
+                WHERE ogrenci_num = @no AND is_active = TRUE
+            ";
+
+                    MySqlCommand ogrCmd = new MySqlCommand(ogrQuery, conn);
+                    ogrCmd.Parameters.AddWithValue("@no", txtTeslimOgrenciNo.Text.Trim());
+
+                    object ogrIdObj = ogrCmd.ExecuteScalar();
+
+                    if (ogrIdObj == null)
+                    {
+                        MessageBox.Show("Aktif öğrenci bulunamadı.");
+                        return;
+                    }
+
+                    _selectedOgrenciId = Convert.ToInt32(ogrIdObj);
+
+                    // 2️⃣ aktif ödünçleri getir
+                    string oduncQuery = @"
+                SELECT 
+                    o.odunc_id,
+                    k.kitab_adi,
+                    o.odunc_tarihi,
+                    o.son_teslim_tarihi
+                FROM odunc o
+                JOIN kitaplar k ON o.kitab_id = k.kitab_id
+                WHERE o.ogrenci_id = @ogrId
+                  AND o.teslim_tarihi IS NULL
+            ";
+
+                    MySqlCommand oduncCmd = new MySqlCommand(oduncQuery, conn);
+                    oduncCmd.Parameters.AddWithValue("@ogrId", _selectedOgrenciId);
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(oduncCmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    dgvAktifOduncler.DataSource = dt;
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Bu öğrencinin aktif ödüncü yok.");
+                        btnTeslimAl.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: " + ex.Message);
+            }
+        }
+
+        private void dgvAktifOduncler_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            _selectedOduncId = Convert.ToInt32(
+                dgvAktifOduncler.Rows[e.RowIndex].Cells["odunc_id"].Value
+            );
+
+            btnTeslimAl.Enabled = true;
+        }
+
+        private void btnTeslimAl_Click(object sender, EventArgs e)
+        {
+            if (_selectedOduncId == -1)
+            {
+                MessageBox.Show("Teslim alınacak ödünç seçilmelidir.");
+                return;
+            }
+
+            try
+            {
+                using (MySqlConnection conn = DbConnection.GetConnection())
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_KitapTeslimAl", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@p_odunc_id", _selectedOduncId);
+                    cmd.Parameters.AddWithValue("@p_teslim_tarihi", DateTime.Now.Date);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show(
+                    "Kitap teslim alındı.",
+                    "Başarılı",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                btnTeslimAl.Enabled = false;
+                btnTeslimOgrenciKontrol_Click(null, null); // refresh list
+            }
+            catch (MySqlException ex)
+            {
+                // SIGNAL SQLSTATE '45000'
+                MessageBox.Show(ex.Message, "Veritabanı Uyarısı");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: " + ex.Message);
+            }
+        }
+
+        private void dgvAktifOduncler_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

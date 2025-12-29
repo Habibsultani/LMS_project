@@ -40,8 +40,8 @@
             lblOgrenciNo = new Label();
             grpTeslimAl = new GroupBox();
             btnTeslimAl = new Button();
-            btnCheckOgrenciTeslim = new Button();
-            txtOgrenciNoTeslim = new TextBox();
+            btnTeslimOgrenciKontrol = new Button();
+            txtTeslimOgrenciNo = new TextBox();
             lblOgrenciNoTeslim = new Label();
             dgvAktifOduncler = new DataGridView();
             grpOduncVer.SuspendLayout();
@@ -161,8 +161,8 @@
             // 
             grpTeslimAl.BackColor = SystemColors.ControlDarkDark;
             grpTeslimAl.Controls.Add(btnTeslimAl);
-            grpTeslimAl.Controls.Add(btnCheckOgrenciTeslim);
-            grpTeslimAl.Controls.Add(txtOgrenciNoTeslim);
+            grpTeslimAl.Controls.Add(btnTeslimOgrenciKontrol);
+            grpTeslimAl.Controls.Add(txtTeslimOgrenciNo);
             grpTeslimAl.Controls.Add(lblOgrenciNoTeslim);
             grpTeslimAl.ForeColor = SystemColors.ButtonHighlight;
             grpTeslimAl.Location = new Point(193, 615);
@@ -183,23 +183,25 @@
             btnTeslimAl.TabIndex = 3;
             btnTeslimAl.Text = "Teslim Al ";
             btnTeslimAl.UseVisualStyleBackColor = false;
+            btnTeslimAl.Click += btnTeslimAl_Click;
             // 
-            // btnCheckOgrenciTeslim
+            // btnTeslimOgrenciKontrol
             // 
-            btnCheckOgrenciTeslim.BackColor = Color.CornflowerBlue;
-            btnCheckOgrenciTeslim.Location = new Point(523, 121);
-            btnCheckOgrenciTeslim.Name = "btnCheckOgrenciTeslim";
-            btnCheckOgrenciTeslim.Size = new Size(345, 58);
-            btnCheckOgrenciTeslim.TabIndex = 2;
-            btnCheckOgrenciTeslim.Text = "Ogrenciyi kontrol et";
-            btnCheckOgrenciTeslim.UseVisualStyleBackColor = false;
+            btnTeslimOgrenciKontrol.BackColor = Color.CornflowerBlue;
+            btnTeslimOgrenciKontrol.Location = new Point(523, 121);
+            btnTeslimOgrenciKontrol.Name = "btnTeslimOgrenciKontrol";
+            btnTeslimOgrenciKontrol.Size = new Size(345, 58);
+            btnTeslimOgrenciKontrol.TabIndex = 2;
+            btnTeslimOgrenciKontrol.Text = "Ogrenciyi kontrol et";
+            btnTeslimOgrenciKontrol.UseVisualStyleBackColor = false;
+            btnTeslimOgrenciKontrol.Click += btnTeslimOgrenciKontrol_Click;
             // 
-            // txtOgrenciNoTeslim
+            // txtTeslimOgrenciNo
             // 
-            txtOgrenciNoTeslim.Location = new Point(105, 132);
-            txtOgrenciNoTeslim.Name = "txtOgrenciNoTeslim";
-            txtOgrenciNoTeslim.Size = new Size(355, 47);
-            txtOgrenciNoTeslim.TabIndex = 1;
+            txtTeslimOgrenciNo.Location = new Point(105, 132);
+            txtTeslimOgrenciNo.Name = "txtTeslimOgrenciNo";
+            txtTeslimOgrenciNo.Size = new Size(355, 47);
+            txtTeslimOgrenciNo.TabIndex = 1;
             // 
             // lblOgrenciNoTeslim
             // 
@@ -223,6 +225,8 @@
             dgvAktifOduncler.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAktifOduncler.Size = new Size(1643, 375);
             dgvAktifOduncler.TabIndex = 2;
+            dgvAktifOduncler.CellClick += dgvAktifOduncler_CellClick;
+            dgvAktifOduncler.Click += dgvAktifOduncler_Click;
             // 
             // OduncForm
             // 
@@ -257,9 +261,9 @@
         private Label lblKitapStatus;
         private Button btnOduncVer;
         private GroupBox grpTeslimAl;
-        private TextBox txtOgrenciNoTeslim;
+        private TextBox txtTeslimOgrenciNo;
         private Label lblOgrenciNoTeslim;
-        private Button btnCheckOgrenciTeslim;
+        private Button btnTeslimOgrenciKontrol;
         private DataGridView dgvAktifOduncler;
         private Button btnTeslimAl;
     }
