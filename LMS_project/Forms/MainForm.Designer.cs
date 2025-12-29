@@ -98,6 +98,7 @@
             btnRaporlar.TabIndex = 5;
             btnRaporlar.Text = "Raporlar";
             btnRaporlar.UseVisualStyleBackColor = true;
+            btnRaporlar.Click += btnRaporlar_Click;
             // 
             // btnDinamikSorgu
             // 

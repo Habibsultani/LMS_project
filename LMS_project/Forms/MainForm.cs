@@ -141,5 +141,11 @@ namespace LMS_project
             CezaForm cezaForm = new CezaForm();
             cezaForm.ShowDialog();
         }
+
+        private void btnRaporlar_Click(object sender, EventArgs e)
+        {
+            RaporOduncForm raporForm = new RaporOduncForm();
+            raporForm.ShowDialog();
+        }
     }
 }
