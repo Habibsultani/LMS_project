@@ -88,6 +88,7 @@
             btnCeza.TabIndex = 4;
             btnCeza.Text = "Ceza Goruntuleme";
             btnCeza.UseVisualStyleBackColor = true;
+            btnCeza.Click += btnCeza_click;
             // 
             // btnRaporlar
             // 

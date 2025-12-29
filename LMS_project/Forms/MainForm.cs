@@ -7,7 +7,7 @@ using LMS_project.Database;
 namespace LMS_project
 {
     public partial class MainForm : Form
-    {   
+    {
 
         private int _kullaniciId;
         private int _rol_id;
@@ -21,7 +21,7 @@ namespace LMS_project
 
             if (_rol_id == 1) // Admin rolü
             {
-                rol  = "Admin";
+                rol = "Admin";
             }
             else // Normal kullanıcı rolü
             {
@@ -136,6 +136,10 @@ namespace LMS_project
         }
 
 
-
+        private void btnCeza_click(object sender, EventArgs e)
+        {
+            CezaForm cezaForm = new CezaForm();
+            cezaForm.ShowDialog();
+        }
     }
 }
