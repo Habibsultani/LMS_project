@@ -144,7 +144,7 @@ namespace LMS_project
 
         private void btnRaporlar_Click(object sender, EventArgs e)
         {
-            RaporOduncForm raporForm = new RaporOduncForm();
+            Raporlar raporForm = new Raporlar();
             raporForm.ShowDialog();
         }
     }
