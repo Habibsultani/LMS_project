@@ -1,231 +1,111 @@
-📚 Library Management System (LMS)
+# 📚 Library Management System (LMS)
 
-A desktop-based Library Management System developed using C# WinForms and MySQL, designed to manage books, users, borrowing operations, penalties, and analytical reports in a structured and reliable way.
+A **desktop-based Library Management System** developed using **C# WinForms** and **MySQL**.  
+This application is designed to manage **books, users (students), borrowing operations, penalties, and reports** in a structured and reliable way.
 
-This project demonstrates relational database design, transaction management, dynamic querying, and real-world business rules commonly found in institutional library systems.
+The project is developed as part of a **Database Management Systems (DBMS)** course and demonstrates real-world usage of **relational database design**, **business rules**, and **desktop application architecture**.
 
-🚀 Features
-👤 User (Student) Management
+---
 
-List all registered students
+## 🚀 Features
 
-Add, update, delete students
+### 👤 User (Student) Management
+- List all registered students on form load
+- Add new students
+- Update student information
+- Delete students
+- Search students by **name** or **email**
+- Prevent deletion of students with **active borrowings**
+- Track **total penalty balance** per student
 
-Search students by name or email
+---
 
-Prevent deletion of students with active borrowings
+### 📖 Book Management
+- List all books automatically on form load
+- Add new books with:
+  - Category selection (**1–N relationship**)
+  - Author assignment (**N–N relationship**)
+- Automatically insert a **new author** if it does not already exist
+- Update book information
+- Delete books (blocked if active borrow exists)
+- Search books by:
+  - Book name
+  - Author name
 
-Track total penalty balance per student
+---
 
-📖 Book Management
+### 🔄 Borrowing (Ödünç) System
+- Borrow books with availability check
+- Automatically decrease available stock
+- Return books
+- Restore stock on return
+- Prevent borrowing when stock is zero
 
-List all books on form load
+---
 
-Add new books with:
+### 💰 Penalty (Ceza) System
+- Automatic late-day calculation
+- Automatic penalty generation
+- Store penalties per borrowing
+- Track total unpaid penalties per student
 
-Category assignment (1–N relationship)
+---
 
-Author assignment (N–N relationship via junction table)
+### 🔍 Dynamic Query System
+- Advanced book search using optional filters:
+  - Book name
+  - Author name
+  - Category
+  - Publication year range
+  - Only available books
+- Implemented using **dynamic SQL query construction**
 
-Automatically create new authors or categories if they do not exist
+---
 
-Update and delete books
+### 📊 Reports
+- Most borrowed books
+- Late returned books
+- Borrowing statistics
+- Penalty-related reports
 
-Prevent deletion of books with active loans
+---
 
-Search books by:
+## 🧠 Technologies Used
+- **C# (.NET WinForms)**
+- **MySQL**
+- **ADO.NET (MySql.Data)**
+- **SQL Transactions**
+- **Parameterized Queries**
 
-Book name
+---
 
-Author name
+## 🗂️ Project Structure
 
-🔄 Borrow & Return System
-
-Borrow books with stock validation
-
-Decrease available stock automatically
-
-Return books with:
-
-Late day calculation
-
-Automatic penalty generation
-
-Restore book stock on return
-
-💰 Penalty (Ceza) Management
-
-Automatically calculate penalties for late returns
-
-Store penalties per loan
-
-Display penalties per student
-
-Track total outstanding debt
-
-🔍 Dynamic Query (Advanced Search)
-
-Search books dynamically using optional filters:
-
-Book name
-
-Author name
-
-Category
-
-Publication year range
-
-Availability (only books in stock)
-
-Built using dynamic SQL construction
-
-📊 Reports
-
-Most borrowed books
-
-Overdue (late) books
-
-Borrowing statistics
-
-Penalty-related reports
-
-🧠 Technologies Used
-
-C# (.NET WinForms) – Desktop application
-
-MySQL – Relational database
-
-ADO.NET (MySql.Data) – Database connectivity
-
-SQL Transactions – Data consistency
-
-Parameterized Queries – SQL injection prevention
-
-🗂️ Project Structure
+```text
 LMS_project
 │
 ├── Database
-│   └── DbConnection.cs          # MySQL connection helper
+│   └── DbConnection.cs
 │
 ├── Forms
-│   ├── LoginForm.cs             # User login
-│   ├── MainForm.cs              # Main menu
-│   ├── UyeForm.cs               # Student management
-│   ├── KitapForm.cs             # Book management
-│   ├── OduncForm.cs             # Borrow / Return operations
-│   ├── CezaForm.cs              # Penalty management
-│   ├── DinamikSorguForm.cs      # Dynamic search
-│   ├── Raporlar.cs              # Reports menu
+│   ├── LoginForm.cs
+│   ├── MainForm.cs
+│   ├── UyeForm.cs
+│   ├── KitapForm.cs
+│   ├── OduncForm.cs
+│   ├── CezaForm.cs
+│   ├── DinamikSorguForm.cs
+│   ├── Raporlar.cs
 │   ├── RaporOduncForm.cs
 │   ├── RaporEnCokOduncForm.cs
 │   └── RaporGecikenKitaplarForm.cs
 │
 ├── Model
-│   ├── Kitap.cs                 # Book model
-│   └── Uye.cs                   # Student model
+│   ├── Kitap.cs
+│   └── Uye.cs
 │
 ├── Resources
-│   └── *.jpg                    # UI background images
+│   └── *.jpg
 │
-├── Program.cs                   # Application entry point
+├── Program.cs
 └── README.md
-
-🗃️ Database Design Summary
-Key Tables
-
-ogrenci_uyeler
-
-kitaplar
-
-kategori
-
-yazar
-
-kitap_yazari (junction table)
-
-odunc
-
-ceza
-
-Relationships
-
-Category → Book : One-to-Many (1–N)
-
-Book ↔ Author : Many-to-Many (N–N)
-
-Student → Loan : One-to-Many (1–N)
-
-Loan → Penalty : One-to-One / Optional
-
-⚙️ How to Run the Project
-1️⃣ Prerequisites
-
-Visual Studio 2022 or newer
-
-.NET Desktop Development workload
-
-MySQL Server
-
-MySQL Connector / NET (MySql.Data)
-
-2️⃣ Database Setup
-
-Create a MySQL database (e.g. lms_db)
-
-Import the provided SQL schema
-
-Update the connection string in:
-
-Database/DbConnection.cs
-
-
-Example:
-
-server=localhost;
-database=lms_db;
-uid=root;
-pwd=your_password;
-
-3️⃣ Run the Application
-
-Open the solution in Visual Studio
-
-Restore NuGet packages
-
-Set LMS_project as startup project
-
-Run the application (F5)
-
-🔐 Security & Data Integrity
-
-All SQL operations use parameterized queries
-
-Critical operations use transactions
-
-Business rules enforced at:
-
-Application level
-
-Database level
-
-🎯 Educational Objectives
-
-This project was developed to demonstrate:
-
-Relational database modeling
-
-CRUD operations
-
-Transaction management
-
-Dynamic SQL queries
-
-Desktop application architecture
-
-Real-life business logic implementation
-
-📌 Author
-
-Developed by Yasin
-Computer Engineering Student
-Library Management System – DBMS Project
