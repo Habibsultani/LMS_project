@@ -45,6 +45,13 @@
             btnTemizle = new Button();
             btnBack = new Button();
             dgvKitaplar = new DataGridView();
+            label7 = new Label();
+            txtYazarAdi = new TextBox();
+            label8 = new Label();
+            txtAraKitapAdi = new TextBox();
+            label9 = new Label();
+            txtAraYazarAdi = new TextBox();
+            btnKitabiAra = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvKitaplar).BeginInit();
             SuspendLayout();
             // 
@@ -69,7 +76,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(679, 194);
+            label3.Location = new Point(759, 194);
             label3.Name = "label3";
             label3.Size = new Size(130, 41);
             label3.TabIndex = 2;
@@ -106,14 +113,14 @@
             // 
             txtKitapAdi.Location = new Point(193, 237);
             txtKitapAdi.Name = "txtKitapAdi";
-            txtKitapAdi.Size = new Size(457, 47);
+            txtKitapAdi.Size = new Size(240, 47);
             txtKitapAdi.TabIndex = 6;
             // 
             // txtYayinYili
             // 
-            txtYayinYili.Location = new Point(679, 238);
+            txtYayinYili.Location = new Point(759, 236);
             txtYayinYili.Name = "txtYayinYili";
-            txtYayinYili.Size = new Size(250, 47);
+            txtYayinYili.Size = new Size(201, 47);
             txtYayinYili.TabIndex = 7;
             // 
             // txtToplamAdet
@@ -141,7 +148,7 @@
             // btnEkle
             // 
             btnEkle.BackColor = Color.Chartreuse;
-            btnEkle.Location = new Point(303, 387);
+            btnEkle.Location = new Point(300, 324);
             btnEkle.Name = "btnEkle";
             btnEkle.Size = new Size(331, 58);
             btnEkle.TabIndex = 11;
@@ -152,29 +159,27 @@
             // btnGuncelle
             // 
             btnGuncelle.BackColor = Color.Aquamarine;
-            btnGuncelle.Location = new Point(679, 387);
+            btnGuncelle.Location = new Point(661, 324);
             btnGuncelle.Name = "btnGuncelle";
             btnGuncelle.Size = new Size(330, 58);
             btnGuncelle.TabIndex = 12;
             btnGuncelle.Text = "Guncelle";
             btnGuncelle.UseVisualStyleBackColor = false;
-            btnGuncelle.Click += btnGuncelle_Click;
             // 
             // btnSil
             // 
             btnSil.BackColor = Color.Brown;
-            btnSil.Location = new Point(1040, 387);
+            btnSil.Location = new Point(1027, 324);
             btnSil.Name = "btnSil";
             btnSil.Size = new Size(295, 58);
             btnSil.TabIndex = 13;
             btnSil.Text = "Sil";
             btnSil.UseVisualStyleBackColor = false;
-            btnSil.Click += btnSil_Click;
             // 
             // btnTemizle
             // 
             btnTemizle.BackColor = SystemColors.AppWorkspace;
-            btnTemizle.Location = new Point(1371, 387);
+            btnTemizle.Location = new Point(1367, 324);
             btnTemizle.Name = "btnTemizle";
             btnTemizle.Size = new Size(327, 58);
             btnTemizle.TabIndex = 14;
@@ -207,12 +212,78 @@
             dgvKitaplar.Size = new Size(1772, 676);
             dgvKitaplar.TabIndex = 16;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(472, 192);
+            label7.Name = "label7";
+            label7.Size = new Size(134, 41);
+            label7.TabIndex = 17;
+            label7.Text = "Yazar adi";
+            // 
+            // txtYazarAdi
+            // 
+            txtYazarAdi.Location = new Point(472, 238);
+            txtYazarAdi.Name = "txtYazarAdi";
+            txtYazarAdi.Size = new Size(250, 47);
+            txtYazarAdi.TabIndex = 18;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(300, 413);
+            label8.Name = "label8";
+            label8.Size = new Size(292, 41);
+            label8.TabIndex = 19;
+            label8.Text = "Aramak icin kitab adi";
+            // 
+            // txtAraKitapAdi
+            // 
+            txtAraKitapAdi.Location = new Point(300, 457);
+            txtAraKitapAdi.Name = "txtAraKitapAdi";
+            txtAraKitapAdi.Size = new Size(422, 47);
+            txtAraKitapAdi.TabIndex = 20;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(772, 413);
+            label9.Name = "label9";
+            label9.Size = new Size(328, 41);
+            label9.TabIndex = 21;
+            label9.Text = "Aramak icin kitab yazari";
+            // 
+            // txtAraYazarAdi
+            // 
+            txtAraYazarAdi.Location = new Point(772, 457);
+            txtAraYazarAdi.Name = "txtAraYazarAdi";
+            txtAraYazarAdi.Size = new Size(452, 47);
+            txtAraYazarAdi.TabIndex = 22;
+            // 
+            // btnKitabiAra
+            // 
+            btnKitabiAra.BackColor = Color.SkyBlue;
+            btnKitabiAra.Location = new Point(1286, 446);
+            btnKitabiAra.Name = "btnKitabiAra";
+            btnKitabiAra.Size = new Size(408, 58);
+            btnKitabiAra.TabIndex = 23;
+            btnKitabiAra.Text = "Kitabi Ara";
+            btnKitabiAra.UseVisualStyleBackColor = false;
+            btnKitabiAra.Click += btnKitabiAra_Click;
+            // 
             // KitapForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.aw528649_01_0_resized2;
             ClientSize = new Size(2076, 1257);
+            Controls.Add(btnKitabiAra);
+            Controls.Add(txtAraYazarAdi);
+            Controls.Add(label9);
+            Controls.Add(txtAraKitapAdi);
+            Controls.Add(label8);
+            Controls.Add(txtYazarAdi);
+            Controls.Add(label7);
             Controls.Add(dgvKitaplar);
             Controls.Add(btnBack);
             Controls.Add(btnTemizle);
@@ -256,5 +327,12 @@
         private Button btnTemizle;
         private Button btnBack;
         private DataGridView dgvKitaplar;
+        private Label label7;
+        private TextBox txtYazarAdi;
+        private Label label8;
+        private TextBox txtAraKitapAdi;
+        private Label label9;
+        private TextBox txtAraYazarAdi;
+        private Button btnKitabiAra;
     }
 }

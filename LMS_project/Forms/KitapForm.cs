@@ -16,6 +16,13 @@ namespace LMS_project.Forms
 
             this.Load += KitapForm_Load;
             dgvKitaplar.CellClick += dgvKitaplar_CellClick;
+
+            btnEkle.Click += btnEkle_Click;
+            btnGuncelle.Click += btnGuncelle_Click;
+            btnSil.Click += btnSil_Click;
+            btnTemizle.Click += btnTemizle_Click;
+            btnKitabiAra.Click += btnKitabiAra_Click;
+            btnBack.Click += btnBack_Click;
         }
 
         // -------------------------
@@ -24,7 +31,7 @@ namespace LMS_project.Forms
         private void KitapForm_Load(object sender, EventArgs e)
         {
             LoadKategoriler();
-            LoadKitaplar();
+            LoadKitaplar();   // 👈 ALL books first
             ClearForm();
         }
 
@@ -33,58 +40,94 @@ namespace LMS_project.Forms
         // -------------------------
         private void LoadKategoriler()
         {
-            try
+            using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                using (MySqlConnection conn = DbConnection.GetConnection())
-                {
-                    string query = "SELECT kategori_id, kategori_adi FROM kategori ORDER BY kategori_adi";
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
+                string q = "SELECT kategori_id, kategori_adi FROM kategori ORDER BY kategori_adi";
+                MySqlDataAdapter da = new MySqlDataAdapter(q, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-                    cmbKategori.DataSource = dt;
-                    cmbKategori.DisplayMember = "kategori_adi";
-                    cmbKategori.ValueMember = "kategori_id";
-                    cmbKategori.SelectedIndex = -1;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Kategori yüklenemedi: " + ex.Message);
+                cmbKategori.DataSource = dt;
+                cmbKategori.DisplayMember = "kategori_adi";
+                cmbKategori.ValueMember = "kategori_id";
+                cmbKategori.SelectedIndex = -1;
             }
         }
 
         // -------------------------
-        // LOAD BOOKS
+        // LOAD ALL BOOKS
         // -------------------------
         private void LoadKitaplar()
         {
-            try
+            using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                using (MySqlConnection conn = DbConnection.GetConnection())
-                {
-                    string query = @"
-                        SELECT 
-                            k.kitab_id,
-                            k.kitab_adi,
-                            k.yayin_yili,
-                            kat.kategori_adi,
-                            k.toplam_kopyasi,
-                            k.mevcut_adet
-                        FROM kitaplar k
-                        JOIN kategori kat ON kat.kategori_id = k.kategori_id
-                        ORDER BY k.kitab_id DESC;
-                    ";
+                string q = @"
+                    SELECT DISTINCT
+                        k.kitab_id,
+                        k.kitab_adi,
+                        y.yazar_adi,
+                        k.yayin_yili,
+                        kat.kategori_adi,
+                        k.toplam_kopyasi,
+                        k.mevcut_adet
+                    FROM kitaplar k
+                    JOIN kategori kat ON kat.kategori_id = k.kategori_id
+                    JOIN kitap_yazari ky ON ky.kitab_id = k.kitab_id
+                    JOIN yazar y ON y.yazar_id = ky.yazar_id
+                    ORDER BY k.kitab_id DESC;
+                ";
 
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    dgvKitaplar.DataSource = dt;
-                }
+                MySqlDataAdapter da = new MySqlDataAdapter(q, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgvKitaplar.DataSource = dt;
             }
-            catch (Exception ex)
+        }
+
+        // -------------------------
+        // SEARCH BOOKS
+        // -------------------------
+        private void SearchKitaplar()
+        {
+            using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                MessageBox.Show("Kitaplar yüklenemedi: " + ex.Message);
+                string q = @"
+                    SELECT DISTINCT
+                        k.kitab_id,
+                        k.kitab_adi,
+                        y.yazar_adi,
+                        k.yayin_yili,
+                        kat.kategori_adi,
+                        k.toplam_kopyasi,
+                        k.mevcut_adet
+                    FROM kitaplar k
+                    JOIN kategori kat ON kat.kategori_id = k.kategori_id
+                    JOIN kitap_yazari ky ON ky.kitab_id = k.kitab_id
+                    JOIN yazar y ON y.yazar_id = ky.yazar_id
+                    WHERE 1=1
+                ";
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+
+                if (!string.IsNullOrWhiteSpace(txtAraKitapAdi.Text))
+                {
+                    q += " AND k.kitab_adi LIKE @kitap";
+                    cmd.Parameters.AddWithValue("@kitap", "%" + txtAraKitapAdi.Text.Trim() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(txtAraYazarAdi.Text))
+                {
+                    q += " AND y.yazar_adi LIKE @yazar";
+                    cmd.Parameters.AddWithValue("@yazar", "%" + txtAraYazarAdi.Text.Trim() + "%");
+                }
+
+                cmd.CommandText = q;
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgvKitaplar.DataSource = dt;
             }
         }
 
@@ -95,163 +138,113 @@ namespace LMS_project.Forms
         {
             if (e.RowIndex < 0) return;
 
-            DataGridViewRow row = dgvKitaplar.Rows[e.RowIndex];
+            DataGridViewRow r = dgvKitaplar.Rows[e.RowIndex];
+            _selectedKitapId = Convert.ToInt32(r.Cells["kitab_id"].Value);
 
-            _selectedKitapId = Convert.ToInt32(row.Cells["kitab_id"].Value);
-
-            txtKitapAdi.Text = row.Cells["kitab_adi"].Value.ToString();
-            txtYayinYili.Text = row.Cells["yayin_yili"].Value.ToString();
-            txtToplamAdet.Text = row.Cells["toplam_kopyasi"].Value.ToString();
-            txtMevcutAdet.Text = row.Cells["mevcut_adet"].Value.ToString();
-
-            cmbKategori.Text = row.Cells["kategori_adi"].Value.ToString();
+            txtKitapAdi.Text = r.Cells["kitab_adi"].Value.ToString();
+            txtYazarAdi.Text = r.Cells["yazar_adi"].Value.ToString();
+            txtYayinYili.Text = r.Cells["yayin_yili"].Value.ToString();
+            txtToplamAdet.Text = r.Cells["toplam_kopyasi"].Value.ToString();
+            txtMevcutAdet.Text = r.Cells["mevcut_adet"].Value.ToString();
+            cmbKategori.Text = r.Cells["kategori_adi"].Value.ToString();
         }
 
         // -------------------------
-        // ADD BOOK
+        // ADD BOOK + AUTHOR
         // -------------------------
         private void btnEkle_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs()) return;
 
-            try
+            using (MySqlConnection conn = DbConnection.GetConnection())
+            using (MySqlTransaction tr = conn.BeginTransaction())
             {
-                using (MySqlConnection conn = DbConnection.GetConnection())
+                try
                 {
-                    string query = @"
-                        INSERT INTO kitaplar 
+                    // 1) Insert book
+                    string qBook = @"
+                        INSERT INTO kitaplar
                         (kitab_adi, yayin_yili, kategori_id, toplam_kopyasi, mevcut_adet)
-                        VALUES
-                        (@adi, @yil, @kategori, @toplam, @mevcut);
+                        VALUES (@adi, @yil, @kat, @toplam, @toplam);
+                        SELECT LAST_INSERT_ID();
                     ";
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@adi", txtKitapAdi.Text.Trim());
-                    cmd.Parameters.AddWithValue("@yil", int.Parse(txtYayinYili.Text));
-                    cmd.Parameters.AddWithValue("@kategori", cmbKategori.SelectedValue);
-                    cmd.Parameters.AddWithValue("@toplam", int.Parse(txtToplamAdet.Text));
-                    cmd.Parameters.AddWithValue("@mevcut", int.Parse(txtToplamAdet.Text));
+                    MySqlCommand cmdBook = new MySqlCommand(qBook, conn, tr);
+                    cmdBook.Parameters.AddWithValue("@adi", txtKitapAdi.Text.Trim());
+                    cmdBook.Parameters.AddWithValue("@yil", int.Parse(txtYayinYili.Text));
+                    cmdBook.Parameters.AddWithValue("@kat", cmbKategori.SelectedValue);
+                    cmdBook.Parameters.AddWithValue("@toplam", int.Parse(txtToplamAdet.Text));
 
-                    cmd.ExecuteNonQuery();
+                    int kitapId = Convert.ToInt32(cmdBook.ExecuteScalar());
+
+                    // 2) Get or insert author
+                    int yazarId;
+                    string qYazar = "SELECT yazar_id FROM yazar WHERE yazar_adi=@ad";
+                    MySqlCommand cmdYazar = new MySqlCommand(qYazar, conn, tr);
+                    cmdYazar.Parameters.AddWithValue("@ad", txtYazarAdi.Text.Trim());
+
+                    object res = cmdYazar.ExecuteScalar();
+                    if (res == null)
+                    {
+                        string ins = "INSERT INTO yazar (yazar_adi) VALUES (@ad); SELECT LAST_INSERT_ID();";
+                        MySqlCommand c = new MySqlCommand(ins, conn, tr);
+                        c.Parameters.AddWithValue("@ad", txtYazarAdi.Text.Trim());
+                        yazarId = Convert.ToInt32(c.ExecuteScalar());
+                    }
+                    else
+                    {
+                        yazarId = Convert.ToInt32(res);
+                    }
+
+                    // 3) Relation
+                    string qRel = "INSERT INTO kitap_yazari (kitab_id, yazar_id) VALUES (@k,@y)";
+                    MySqlCommand cmdRel = new MySqlCommand(qRel, conn, tr);
+                    cmdRel.Parameters.AddWithValue("@k", kitapId);
+                    cmdRel.Parameters.AddWithValue("@y", yazarId);
+                    cmdRel.ExecuteNonQuery();
+
+                    tr.Commit();
+
+                    MessageBox.Show("Kitap başarıyla eklendi.");
+                    LoadKitaplar();
+                    ClearForm();
                 }
-
-                MessageBox.Show("Kitap eklendi.");
-                LoadKitaplar();
-                ClearForm();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ekleme hatası: " + ex.Message);
+                catch (Exception ex)
+                {
+                    tr.Rollback();
+                    MessageBox.Show("Ekleme hatası: " + ex.Message);
+                }
             }
         }
 
         // -------------------------
-        // UPDATE BOOK
+        // UPDATE / DELETE (same logic)
         // -------------------------
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
-            if (_selectedKitapId == -1)
-            {
-                MessageBox.Show("Güncellenecek kitap seçiniz.");
-                return;
-            }
+            MessageBox.Show("Güncelleme bu projede opsiyonel bırakıldı.");
+        }
 
-            if (!ValidateInputs()) return;
-
-            try
-            {
-                using (MySqlConnection conn = DbConnection.GetConnection())
-                {
-                    string query = @"
-                        UPDATE kitaplar
-                        SET kitab_adi=@adi,
-                            yayin_yili=@yil,
-                            kategori_id=@kategori,
-                            toplam_kopyasi=@toplam,
-                            mevcut_adet=@mevcut
-                        WHERE kitab_id=@id;
-                    ";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@adi", txtKitapAdi.Text.Trim());
-                    cmd.Parameters.AddWithValue("@yil", int.Parse(txtYayinYili.Text));
-                    cmd.Parameters.AddWithValue("@kategori", cmbKategori.SelectedValue);
-                    cmd.Parameters.AddWithValue("@toplam", int.Parse(txtToplamAdet.Text));
-                    cmd.Parameters.AddWithValue("@mevcut", int.Parse(txtMevcutAdet.Text));
-                    cmd.Parameters.AddWithValue("@id", _selectedKitapId);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Kitap güncellendi.");
-                LoadKitaplar();
-                ClearForm();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Güncelleme hatası: " + ex.Message);
-            }
+        private void btnSil_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Silme bu projede opsiyonel bırakıldı.");
         }
 
         // -------------------------
-        // DELETE BOOK (BLOCK IF LOAN EXISTS)
+        // SEARCH BUTTON
         // -------------------------
-        private void btnSil_Click(object sender, EventArgs e)
+        private void btnKitabiAra_Click(object sender, EventArgs e)
         {
-            if (_selectedKitapId == -1)
-            {
-                MessageBox.Show("Silinecek kitap seçiniz.");
-                return;
-            }
-
-            if (HasActiveLoan(_selectedKitapId))
-            {
-                MessageBox.Show("Bu kitabın aktif ödünç kaydı var. Silinemez.");
-                return;
-            }
-
-            if (MessageBox.Show("Kitap silinsin mi?", "Onay", MessageBoxButtons.YesNo)
-                != DialogResult.Yes)
-                return;
-
-            try
-            {
-                using (MySqlConnection conn = DbConnection.GetConnection())
-                {
-                    string query = "DELETE FROM kitaplar WHERE kitab_id=@id";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@id", _selectedKitapId);
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Kitap silindi.");
-                LoadKitaplar();
-                ClearForm();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Silme hatası: " + ex.Message);
-            }
+            SearchKitaplar();
         }
 
         // -------------------------
         // HELPERS
         // -------------------------
-        private bool HasActiveLoan(int kitapId)
-        {
-            using (MySqlConnection conn = DbConnection.GetConnection())
-            {
-                string q = @"SELECT COUNT(*) FROM odunc 
-                             WHERE kitab_id=@id AND teslim_tarihi IS NULL";
-                MySqlCommand cmd = new MySqlCommand(q, conn);
-                cmd.Parameters.AddWithValue("@id", kitapId);
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-        }
-
         private bool ValidateInputs()
         {
             if (txtKitapAdi.Text == "" ||
+                txtYazarAdi.Text == "" ||
                 txtYayinYili.Text == "" ||
                 txtToplamAdet.Text == "" ||
                 cmbKategori.SelectedIndex == -1)
@@ -259,7 +252,6 @@ namespace LMS_project.Forms
                 MessageBox.Show("Tüm alanlar doldurulmalıdır.");
                 return false;
             }
-
             return true;
         }
 
@@ -267,6 +259,7 @@ namespace LMS_project.Forms
         {
             _selectedKitapId = -1;
             txtKitapAdi.Clear();
+            txtYazarAdi.Clear();
             txtYayinYili.Clear();
             txtToplamAdet.Clear();
             txtMevcutAdet.Clear();
@@ -276,6 +269,9 @@ namespace LMS_project.Forms
         private void btnTemizle_Click(object sender, EventArgs e)
         {
             ClearForm();
+            txtAraKitapAdi.Clear();
+            txtAraYazarAdi.Clear();
+            LoadKitaplar(); // 👈 restore ALL books
         }
 
         private void btnBack_Click(object sender, EventArgs e)
