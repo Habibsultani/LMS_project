@@ -14,7 +14,7 @@ namespace LMS_project.Forms
         {
             InitializeComponent();
 
-            // Event hookups (in case you didn't bind in Designer)
+            // Safety event bindings
             this.Load += UyeForm_Load;
             dgvUyeler.CellClick += dgvUyeler_CellClick;
 
@@ -22,21 +22,22 @@ namespace LMS_project.Forms
             btnGuncelle.Click += btnGuncelle_Click;
             btnSil.Click += btnSil_Click;
             btnTemizle.Click += btnTemizle_Click;
+            btnOgrenciAra.Click += btnOgrenciAra_Click;
         }
 
-        // -------------------------
-        // FORM LOAD: Fill DataGrid
-        // -------------------------
+        // =========================
+        // FORM LOAD → LIST ALL
+        // =========================
         private void UyeForm_Load(object sender, EventArgs e)
         {
-            LoadUyeler();
+            LoadUyeler();      // 🔥 ALL students
             ClearInputs();
         }
 
-        // -------------------------
-        // LOAD MEMBERS INTO GRID
-        // -------------------------
-        private void LoadUyeler()
+        // =========================
+        // LOAD STUDENTS (OPTIONAL FILTER)
+        // =========================
+        private void LoadUyeler(string whereClause = "", MySqlParameter[] parameters = null)
         {
             try
             {
@@ -52,36 +53,29 @@ namespace LMS_project.Forms
                             toplam_borc,
                             is_active
                         FROM ogrenci_uyeler
+                        WHERE 1=1 " + whereClause + @"
                         ORDER BY ogrenci_id DESC;
                     ";
 
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                    if (parameters != null)
+                        cmd.Parameters.AddRange(parameters);
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
                     dgvUyeler.DataSource = dt;
 
-                    // Optional: nicer headers
-                    if (dgvUyeler.Columns["ogrenci_id"] != null)
-                        dgvUyeler.Columns["ogrenci_id"].HeaderText = "ID";
-
-                    if (dgvUyeler.Columns["ogrenci_num"] != null)
-                        dgvUyeler.Columns["ogrenci_num"].HeaderText = "Öğrenci No";
-
-                    if (dgvUyeler.Columns["ad_soyadi"] != null)
-                        dgvUyeler.Columns["ad_soyadi"].HeaderText = "Ad Soyad";
-
-                    if (dgvUyeler.Columns["e_posta"] != null)
-                        dgvUyeler.Columns["e_posta"].HeaderText = "E-Posta";
-
-                    if (dgvUyeler.Columns["telefon"] != null)
-                        dgvUyeler.Columns["telefon"].HeaderText = "Telefon";
-
-                    if (dgvUyeler.Columns["toplam_borc"] != null)
-                        dgvUyeler.Columns["toplam_borc"].HeaderText = "Toplam Borç";
-
-                    if (dgvUyeler.Columns["is_active"] != null)
-                        dgvUyeler.Columns["is_active"].HeaderText = "Aktif mi?";
+                    // Column titles (optional polish)
+                    dgvUyeler.Columns["ogrenci_id"].HeaderText = "ID";
+                    dgvUyeler.Columns["ogrenci_num"].HeaderText = "Öğrenci No";
+                    dgvUyeler.Columns["ad_soyadi"].HeaderText = "Ad Soyad";
+                    dgvUyeler.Columns["e_posta"].HeaderText = "E-Posta";
+                    dgvUyeler.Columns["telefon"].HeaderText = "Telefon";
+                    dgvUyeler.Columns["toplam_borc"].HeaderText = "Toplam Borç";
+                    dgvUyeler.Columns["is_active"].HeaderText = "Aktif";
                 }
             }
             catch (Exception ex)
@@ -90,12 +84,45 @@ namespace LMS_project.Forms
             }
         }
 
-        // -------------------------
-        // GRID CLICK -> FILL INPUTS
-        // -------------------------
+        // =========================
+        // SEARCH STUDENT
+        // =========================
+        private void btnOgrenciAra_Click(object sender, EventArgs e)
+        {
+            string adSoyad = txtAraAdSoyad.Text.Trim();
+            string email = txtAraEmail.Text.Trim();
+
+            // 🔴 If nothing entered → show all again
+            if (string.IsNullOrWhiteSpace(adSoyad) && string.IsNullOrWhiteSpace(email))
+            {
+                LoadUyeler();
+                return;
+            }
+
+            string where = "";
+            var parameters = new System.Collections.Generic.List<MySqlParameter>();
+
+            if (!string.IsNullOrWhiteSpace(adSoyad))
+            {
+                where += " AND ad_soyadi LIKE @ad";
+                parameters.Add(new MySqlParameter("@ad", "%" + adSoyad + "%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                where += " AND e_posta LIKE @mail";
+                parameters.Add(new MySqlParameter("@mail", "%" + email + "%"));
+            }
+
+            LoadUyeler(where, parameters.ToArray());
+        }
+
+        // =========================
+        // GRID CLICK → FILL INPUTS
+        // =========================
         private void dgvUyeler_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return; // header click
+            if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvUyeler.Rows[e.RowIndex];
 
@@ -107,17 +134,13 @@ namespace LMS_project.Forms
             txtTelefon.Text = row.Cells["telefon"].Value?.ToString();
         }
 
-        // -------------------------
-        // ADD MEMBER
-        // -------------------------
+        // =========================
+        // ADD STUDENT
+        // =========================
         private void btnEkle_Click(object sender, EventArgs e)
         {
-            string ogrNo = txtOgrenciNo.Text.Trim();
-            string adSoyad = txtAdSoyad.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            string tel = txtTelefon.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(ogrNo) || string.IsNullOrWhiteSpace(adSoyad))
+            if (string.IsNullOrWhiteSpace(txtOgrenciNo.Text) ||
+                string.IsNullOrWhiteSpace(txtAdSoyad.Text))
             {
                 MessageBox.Show("Öğrenci No ve Ad Soyad zorunludur.");
                 return;
@@ -127,30 +150,24 @@ namespace LMS_project.Forms
             {
                 using (MySqlConnection conn = DbConnection.GetConnection())
                 {
-                    string query = @"
-                        INSERT INTO ogrenci_uyeler (ogrenci_num, ad_soyadi, e_posta, telefon, toplam_borc, is_active)
+                    string q = @"
+                        INSERT INTO ogrenci_uyeler
+                        (ogrenci_num, ad_soyadi, e_posta, telefon, toplam_borc, is_active)
                         VALUES (@no, @ad, NULLIF(@mail,''), NULLIF(@tel,''), 0, 1);
                     ";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@no", ogrNo);
-                        cmd.Parameters.AddWithValue("@ad", adSoyad);
-                        cmd.Parameters.AddWithValue("@mail", email);
-                        cmd.Parameters.AddWithValue("@tel", tel);
+                    MySqlCommand cmd = new MySqlCommand(q, conn);
+                    cmd.Parameters.AddWithValue("@no", txtOgrenciNo.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ad", txtAdSoyad.Text.Trim());
+                    cmd.Parameters.AddWithValue("@mail", txtEmail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@tel", txtTelefon.Text.Trim());
 
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Üye başarıyla eklendi.");
+                MessageBox.Show("Üye eklendi.");
                 LoadUyeler();
                 ClearInputs();
-            }
-            catch (MySqlException ex)
-            {
-                // Common: duplicate ogrenci_num or email unique
-                MessageBox.Show("Ekleme hatası (Unique olabilir): " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -158,25 +175,14 @@ namespace LMS_project.Forms
             }
         }
 
-        // -------------------------
-        // UPDATE MEMBER
-        // -------------------------
+        // =========================
+        // UPDATE STUDENT
+        // =========================
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
             if (_selectedOgrenciId == -1)
             {
-                MessageBox.Show("Lütfen güncellemek için tablodan bir üye seçin.");
-                return;
-            }
-
-            string ogrNo = txtOgrenciNo.Text.Trim();
-            string adSoyad = txtAdSoyad.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            string tel = txtTelefon.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(ogrNo) || string.IsNullOrWhiteSpace(adSoyad))
-            {
-                MessageBox.Show("Öğrenci No ve Ad Soyad zorunludur.");
+                MessageBox.Show("Güncellemek için üye seçin.");
                 return;
             }
 
@@ -184,7 +190,7 @@ namespace LMS_project.Forms
             {
                 using (MySqlConnection conn = DbConnection.GetConnection())
                 {
-                    string query = @"
+                    string q = @"
                         UPDATE ogrenci_uyeler
                         SET 
                             ogrenci_num = @no,
@@ -194,25 +200,19 @@ namespace LMS_project.Forms
                         WHERE ogrenci_id = @id;
                     ";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@no", ogrNo);
-                        cmd.Parameters.AddWithValue("@ad", adSoyad);
-                        cmd.Parameters.AddWithValue("@mail", email);
-                        cmd.Parameters.AddWithValue("@tel", tel);
-                        cmd.Parameters.AddWithValue("@id", _selectedOgrenciId);
+                    MySqlCommand cmd = new MySqlCommand(q, conn);
+                    cmd.Parameters.AddWithValue("@no", txtOgrenciNo.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ad", txtAdSoyad.Text.Trim());
+                    cmd.Parameters.AddWithValue("@mail", txtEmail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@tel", txtTelefon.Text.Trim());
+                    cmd.Parameters.AddWithValue("@id", _selectedOgrenciId);
 
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Üye başarıyla güncellendi.");
+                MessageBox.Show("Üye güncellendi.");
                 LoadUyeler();
                 ClearInputs();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Güncelleme hatası (Unique olabilir): " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -220,44 +220,31 @@ namespace LMS_project.Forms
             }
         }
 
-        // -------------------------
-        // DELETE MEMBER (BLOCK IF ACTIVE LOAN EXISTS)
-        // -------------------------
+        // =========================
+        // DELETE STUDENT
+        // =========================
         private void btnSil_Click(object sender, EventArgs e)
         {
             if (_selectedOgrenciId == -1)
             {
-                MessageBox.Show("Lütfen silmek için tablodan bir üye seçin.");
+                MessageBox.Show("Silmek için üye seçin.");
                 return;
             }
 
-            DialogResult dr = MessageBox.Show(
-                "Seçili üyeyi silmek istediğine emin misin?",
-                "Onay",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
-
-            if (dr != DialogResult.Yes) return;
+            if (HasActiveLoan(_selectedOgrenciId))
+            {
+                MessageBox.Show("Aktif ödünç var. Silinemez!");
+                return;
+            }
 
             try
             {
-                // 1) Check active loan
-                if (HasActiveLoan(_selectedOgrenciId))
-                {
-                    MessageBox.Show("Bu üyenin aktif ödünç kaydı var (teslim edilmemiş). Silinemez!");
-                    return;
-                }
-
-                // 2) Delete
                 using (MySqlConnection conn = DbConnection.GetConnection())
                 {
-                    string query = @"DELETE FROM ogrenci_uyeler WHERE ogrenci_id = @id;";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", _selectedOgrenciId);
-                        cmd.ExecuteNonQuery();
-                    }
+                    string q = "DELETE FROM ogrenci_uyeler WHERE ogrenci_id = @id";
+                    MySqlCommand cmd = new MySqlCommand(q, conn);
+                    cmd.Parameters.AddWithValue("@id", _selectedOgrenciId);
+                    cmd.ExecuteNonQuery();
                 }
 
                 MessageBox.Show("Üye silindi.");
@@ -270,59 +257,51 @@ namespace LMS_project.Forms
             }
         }
 
+        // =========================
+        // ACTIVE LOAN CHECK
+        // =========================
         private bool HasActiveLoan(int ogrenciId)
         {
-            try
+            using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                using (MySqlConnection conn = DbConnection.GetConnection())
-                {
-                    string query = @"
-                        SELECT COUNT(*)
-                        FROM odunc
-                        WHERE ogrenci_id = @id
-                          AND teslim_tarihi IS NULL;
-                    ";
+                string q = @"
+                    SELECT COUNT(*)
+                    FROM odunc
+                    WHERE ogrenci_id = @id
+                      AND teslim_tarihi IS NULL;
+                ";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", ogrenciId);
-                        object result = cmd.ExecuteScalar();
-                        int count = Convert.ToInt32(result);
-                        return count > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Aktif ödünç kontrol hatası: " + ex.Message);
-                return true; // safest: block delete if unsure
+                MySqlCommand cmd = new MySqlCommand(q, conn);
+                cmd.Parameters.AddWithValue("@id", ogrenciId);
+
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
         }
 
-        // -------------------------
+        // =========================
         // CLEAR INPUTS
-        // -------------------------
+        // =========================
         private void btnTemizle_Click(object sender, EventArgs e)
         {
             ClearInputs();
+            txtAraAdSoyad.Clear();
+            txtAraEmail.Clear();
+            LoadUyeler(); // 🔥 BACK TO ALL
+        }
+
+        private void ClearInputs()
+        {
+            _selectedOgrenciId = -1;
+            txtOgrenciNo.Clear();
+            txtAdSoyad.Clear();
+            txtEmail.Clear();
+            txtTelefon.Clear();
+            txtOgrenciNo.Focus();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-
-        private void ClearInputs()
-        {
-            _selectedOgrenciId = -1;
-
-            txtOgrenciNo.Clear();
-            txtAdSoyad.Clear();
-            txtEmail.Clear();
-            txtTelefon.Clear();
-
-            txtOgrenciNo.Focus();
         }
     }
 }

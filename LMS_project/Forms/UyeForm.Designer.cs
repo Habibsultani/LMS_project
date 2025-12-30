@@ -44,6 +44,11 @@
             btnTemizle = new Button();
             dgvUyeler = new DataGridView();
             btnBack = new Button();
+            label6 = new Label();
+            txtAraAdSoyad = new TextBox();
+            label7 = new Label();
+            txtAraEmail = new TextBox();
+            btnOgrenciAra = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUyeler).BeginInit();
             SuspendLayout();
             // 
@@ -167,7 +172,7 @@
             dgvUyeler.AllowUserToAddRows = false;
             dgvUyeler.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUyeler.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUyeler.Location = new Point(122, 522);
+            dgvUyeler.Location = new Point(122, 588);
             dgvUyeler.MultiSelect = false;
             dgvUyeler.Name = "dgvUyeler";
             dgvUyeler.ReadOnly = true;
@@ -179,7 +184,7 @@
             // btnBack
             // 
             btnBack.BackColor = Color.SandyBrown;
-            btnBack.Location = new Point(834, 1032);
+            btnBack.Location = new Point(833, 1079);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(376, 58);
             btnBack.TabIndex = 14;
@@ -187,12 +192,60 @@
             btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(198, 468);
+            label6.Name = "label6";
+            label6.Size = new Size(142, 41);
+            label6.TabIndex = 15;
+            label6.Text = "Ad soyad";
+            // 
+            // txtAraAdSoyad
+            // 
+            txtAraAdSoyad.Location = new Point(198, 512);
+            txtAraAdSoyad.Name = "txtAraAdSoyad";
+            txtAraAdSoyad.Size = new Size(417, 47);
+            txtAraAdSoyad.TabIndex = 16;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(655, 468);
+            label7.Name = "label7";
+            label7.Size = new Size(119, 41);
+            label7.TabIndex = 17;
+            label7.Text = "E-posta";
+            // 
+            // txtAraEmail
+            // 
+            txtAraEmail.Location = new Point(655, 512);
+            txtAraEmail.Name = "txtAraEmail";
+            txtAraEmail.Size = new Size(451, 47);
+            txtAraEmail.TabIndex = 18;
+            // 
+            // btnOgrenciAra
+            // 
+            btnOgrenciAra.BackColor = Color.SkyBlue;
+            btnOgrenciAra.Location = new Point(1162, 501);
+            btnOgrenciAra.Name = "btnOgrenciAra";
+            btnOgrenciAra.Size = new Size(558, 58);
+            btnOgrenciAra.TabIndex = 19;
+            btnOgrenciAra.Text = "Ogrenci ara";
+            btnOgrenciAra.UseVisualStyleBackColor = false;
+            btnOgrenciAra.Click += btnOgrenciAra_Click;
+            // 
             // UyeForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(2043, 1175);
+            Controls.Add(btnOgrenciAra);
+            Controls.Add(txtAraEmail);
+            Controls.Add(label7);
+            Controls.Add(txtAraAdSoyad);
+            Controls.Add(label6);
             Controls.Add(btnBack);
             Controls.Add(dgvUyeler);
             Controls.Add(btnTemizle);
@@ -233,5 +286,10 @@
         private Button btnTemizle;
         private DataGridView dgvUyeler;
         private Button btnBack;
+        private Label label6;
+        private TextBox txtAraAdSoyad;
+        private Label label7;
+        private TextBox txtAraEmail;
+        private Button btnOgrenciAra;
     }
 }
