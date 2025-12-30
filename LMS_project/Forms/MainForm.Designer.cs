@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             lblRoleInfo = new Label();
             btnUyeYonetimi = new Button();
             btnKitapYonetimi = new Button();
@@ -108,6 +107,7 @@
             btnDinamikSorgu.TabIndex = 6;
             btnDinamikSorgu.Text = "Dinamik sorgu";
             btnDinamikSorgu.UseVisualStyleBackColor = true;
+            btnDinamikSorgu.Click += btnDinamikSorgu_Click;
             // 
             // btnLogout
             // 
@@ -145,7 +145,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImage = Properties.Resources.aw528649_01_0_resized5;
             ClientSize = new Size(1232, 648);
             Controls.Add(btnKullaniciYonetimi);
             Controls.Add(lblWelcome);

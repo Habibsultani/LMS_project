@@ -9,7 +9,7 @@ namespace LMS_project
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Forms.LoginForm());
+            Application.Run(new LMS_project.Forms.LoginForm());
         }
     }
 }

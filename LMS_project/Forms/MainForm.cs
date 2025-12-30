@@ -147,5 +147,11 @@ namespace LMS_project
             Raporlar raporForm = new Raporlar();
             raporForm.ShowDialog();
         }
+
+        private void btnDinamikSorgu_Click(object sender, EventArgs e)
+        {
+            DinamikSorguForm dinamikSorguForm = new DinamikSorguForm();
+            dinamikSorguForm.ShowDialog();
+        }
     }
 }
