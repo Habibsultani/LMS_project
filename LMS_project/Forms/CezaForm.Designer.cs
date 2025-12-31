@@ -135,7 +135,7 @@
             Controls.Add(dtBitis);
             Controls.Add(dtBaslangic);
             Name = "CezaForm";
-            Text = "CezaForm";
+            Text = "Ceza Page";
             ((System.ComponentModel.ISupportInitialize)dgvCezalar).EndInit();
             ResumeLayout(false);
             PerformLayout();

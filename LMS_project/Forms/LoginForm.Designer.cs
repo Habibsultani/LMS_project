@@ -92,7 +92,7 @@
             Controls.Add(txtUsername);
             Controls.Add(label1);
             Name = "LoginForm";
-            Text = "Login";
+            Text = "Login Page";
             ResumeLayout(false);
             PerformLayout();
         }

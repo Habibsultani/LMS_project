@@ -158,7 +158,7 @@
             Controls.Add(btnUyeYonetimi);
             Controls.Add(lblRoleInfo);
             Name = "MainForm";
-            Text = "Form1";
+            Text = "Dashboard (Main Page)";
             Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
