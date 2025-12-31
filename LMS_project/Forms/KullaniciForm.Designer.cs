@@ -170,7 +170,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "KullaniciForm";
-            Text = "KullaniciForm";
+            Text = "User managment page";
             ResumeLayout(false);
             PerformLayout();
         }

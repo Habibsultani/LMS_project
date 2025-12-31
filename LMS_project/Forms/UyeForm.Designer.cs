@@ -262,7 +262,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "UyeForm";
-            Text = " ";
+            Text = " Student managment page";
             Load += UyeForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvUyeler).EndInit();
             ResumeLayout(false);
