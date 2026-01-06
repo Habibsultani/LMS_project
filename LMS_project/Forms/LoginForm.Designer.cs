@@ -28,14 +28,14 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(213, 199);
+            txtUsername.Location = new Point(542, 308);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(366, 47);
             txtUsername.TabIndex = 3;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(213, 337);
+            txtPassword.Location = new Point(542, 464);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(366, 47);
             txtPassword.TabIndex = 1;
@@ -44,7 +44,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(213, 155);
+            label1.Location = new Point(542, 264);
             label1.Name = "label1";
             label1.Size = new Size(178, 41);
             label1.TabIndex = 4;
@@ -53,7 +53,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(213, 293);
+            label2.Location = new Point(542, 420);
             label2.Name = "label2";
             label2.Size = new Size(76, 41);
             label2.TabIndex = 2;
@@ -62,7 +62,7 @@
             // btnLogin
             // 
             btnLogin.BackColor = Color.LimeGreen;
-            btnLogin.Location = new Point(213, 415);
+            btnLogin.Location = new Point(542, 562);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(366, 55);
             btnLogin.TabIndex = 0;
@@ -73,9 +73,10 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(150, 35);
+            label3.Font = new Font("Segoe UI", 14.1F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(302, 104);
             label3.Name = "label3";
-            label3.Size = new Size(548, 41);
+            label3.Size = new Size(858, 62);
             label3.TabIndex = 5;
             label3.Text = "Kutuphane yonetem sistemi hosgeldiniz";
             // 
@@ -84,7 +85,7 @@
             BackColor = SystemColors.InactiveBorder;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(807, 553);
+            ClientSize = new Size(1493, 918);
             Controls.Add(label3);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);

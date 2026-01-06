@@ -146,7 +146,7 @@
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.aw528649_01_0_resized5;
-            ClientSize = new Size(1232, 648);
+            ClientSize = new Size(1249, 705);
             Controls.Add(btnKullaniciYonetimi);
             Controls.Add(lblWelcome);
             Controls.Add(btnLogout);
