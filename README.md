@@ -129,4 +129,3 @@ LMS_project
 │   └── *.jpg
 │
 ├── Program.cs
-└── README.md
