@@ -163,10 +163,10 @@ Make sure the following tools are installed:
    ```
  5. After all scripts are executed successfully:
     ```text
-    Make sure MySQL and Apache services are running in XAMPP
-    Open the project in Visual Studio
-      Build and run the application
-
+    1.Make sure MySQL and Apache services are running in XAMPP
+    2.Open the project in Visual Studio
+    3.Build and run the application
+    ```
 ###⚠️ Important:
     The SQL files must be executed in the given order to ensure correct database creation and proper application functionality
 
