@@ -76,9 +76,9 @@
             label3.Font = new Font("Segoe UI", 14.1F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(302, 104);
             label3.Name = "label3";
-            label3.Size = new Size(858, 62);
+            label3.Size = new Size(910, 62);
             label3.TabIndex = 5;
-            label3.Text = "Kutuphane yonetem sistemi hosgeldiniz";
+            label3.Text = "Kutuphane yonetem sistemine hosgeldiniz";
             // 
             // LoginForm
             // 
