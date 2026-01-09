@@ -129,3 +129,36 @@ LMS_project
 │   └── *.jpg
 │
 ├── Program.cs
+
+## ⚙️ How to Run the Project (Local Setup)
+
+Follow the steps below to run the **Library Management System (LMS)** on your local machine.
+
+### 🔧 Requirements
+Make sure the following tools are installed:
+
+- **Windows OS**
+- **Visual Studio 2022** (or later)
+  - `.NET Desktop Development` workload enabled
+- **XAMPP** (for MySQL)
+- **MySQL Server**
+- **Git** (optional, for collaboration)
+
+---
+
+### 🗄️ Database Setup (MySQL)
+
+1. Open **XAMPP Control Panel**
+2. Start the **MySQL** service
+3. Open **phpMyAdmin**
+4. To create the database and all required objects, execute the SQL scripts located in the `SQLdb` folder **in the following order**:
+
+   ```text
+   00_create_db.sql
+   01_tables.sql
+   02_procedures.sql
+   03_triggers.sql
+   04_seed_data.sql
+
+
+
