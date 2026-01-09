@@ -160,6 +160,14 @@ Make sure the following tools are installed:
    02_procedures.sql
    03_triggers.sql
    04_seed_data.sql
+   ```
+ 5. After all scripts are executed successfully:
+    ```text
+    Make sure MySQL and Apache services are running in XAMPP
+    Open the project in Visual Studio
+      Build and run the application
 
+###⚠️ Important:
+    The SQL files must be executed in the given order to ensure correct database creation and proper application functionality
 
 
