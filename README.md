@@ -1,16 +1,22 @@
 # 📚 Library Management System (LMS)
 
 A **desktop-based Library Management System** developed using **C# WinForms** and **MySQL**.  
-This application is designed to manage **books, users (students), borrowing operations, penalties, and reports** in a structured and reliable way.
+This application is designed to manage **books, users (students), borrowing operations, penalties, dynamic queries, and reports** in a structured and reliable way.
 
-The project is developed as part of a **Database Management Systems (DBMS)** course and demonstrates real-world usage of **relational database design**, **business rules**, and **desktop application architecture**.
+📺 **Project Presentation Video (YouTube):**  
+👉 https://youtu.be/rGDiv6uhc_U
+
+This project was developed as part of the **Database Management Systems (VTYS / DBMS)** course and demonstrates real-world usage of:
+- Relational database design
+- Business logic at database level
+- Desktop application development
 
 ---
 
 ## 🚀 Features
 
 ### 👤 User (Student) Management
-- List all registered students on form load
+- List all registered students automatically on form load
 - Add new students
 - Update student information
 - Delete students
@@ -27,7 +33,7 @@ The project is developed as part of a **Database Management Systems (DBMS)** cou
   - Author assignment (**N–N relationship**)
 - Automatically insert a **new author** if it does not already exist
 - Update book information
-- Delete books (blocked if active borrow exists)
+- Delete books (blocked if an active borrowing exists)
 - Search books by:
   - Book name
   - Author name
@@ -46,7 +52,7 @@ The project is developed as part of a **Database Management Systems (DBMS)** cou
 ### 💰 Penalty (Ceza) System
 - Automatic late-day calculation
 - Automatic penalty generation
-- Store penalties per borrowing
+- Penalties stored per borrowing
 - Track total unpaid penalties per student
 
 ---
@@ -56,9 +62,10 @@ The project is developed as part of a **Database Management Systems (DBMS)** cou
   - Book name
   - Author name
   - Category
-  - Publication year range
+  - Publication year range (min–max)
   - Only available books
 - Implemented using **dynamic SQL query construction**
+- Filters are optional and combined dynamically at runtime
 
 ---
 
@@ -74,8 +81,22 @@ The project is developed as part of a **Database Management Systems (DBMS)** cou
 - **C# (.NET WinForms)**
 - **MySQL**
 - **ADO.NET (MySql.Data)**
+- **Stored Procedures**
+- **Triggers**
 - **SQL Transactions**
 - **Parameterized Queries**
+
+---
+
+## 🗄️ Database Design Summary
+
+- Relational database model
+- Tables connected using **Primary Keys** and **Foreign Keys**
+- Data redundancy minimized through normalization
+- Business rules handled at **database level** using:
+  - Stored Procedures
+  - Triggers
+- ER Diagram prepared using **draw.io**
 
 ---
 
