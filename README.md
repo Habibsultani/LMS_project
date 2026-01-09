@@ -171,3 +171,23 @@ Make sure the following tools are installed:
     The SQL files must be executed in the given order to ensure correct database creation and proper application functionality
 
 
+## 🤝 Contributing
+
+Contributions are welcome and appreciated!
+
+- Fork the repository and create a new branch for your feature or fix.
+- Follow the existing project structure and coding conventions.
+- Do not add unnecessary files, build artifacts, or temporary data.
+- If your change affects functionality, briefly describe how it was tested
+  (e.g., example workflow, screenshots, or console output).
+- Commit your changes with clear and meaningful commit messages.
+- Open a Pull Request (PR) and explain **what** was changed and **why**.
+
+Please make sure your changes do not break existing features such as:
+- Book management
+- User (student) management
+- Borrowing and penalty logic
+- Database procedures and triggers
+
+
+
