@@ -129,6 +129,7 @@ LMS_project
 │   └── *.jpg
 │
 ├── Program.cs
+```
 
 ## ⚙️ How to Run the Project (Local Setup)
 
